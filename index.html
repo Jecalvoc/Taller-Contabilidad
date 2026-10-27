@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏦 Taller de Arquitectura Financiera - Jóvenes Emprendedores</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    line-height: 1.6;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    min-height: 100vh;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+header h1 { font-size: 2.3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+header p { font-size: 1.1em; opacity: 0.95; }
+nav {
+    background: #2c3e50;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+nav button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+nav button:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+nav button.active { background: #e74c3c; }
+.module { display: none; padding: 30px; animation: fadeIn 0.5s; }
+.module.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.module h2 { color: #667eea; font-size: 1.9em; margin-bottom: 20px; border-bottom: 3px solid #667eea; padding-bottom: 10px; }
+.module h3 { color: #764ba2; font-size: 1.4em; margin: 20px 0 12px 0; }
+.content-box { background: #f8f9fa; border-left: 5px solid #667eea; padding: 18px; margin: 18px 0; border-radius: 5px; }
+.example-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 18px; margin: 18px 0; border-radius: 5px; }
+.warning-box { background: #f8d7da; border-left: 5px solid #dc3545; padding: 18px; margin: 18px 0; border-radius: 5px; }
+.success-box { background: #d4edda; border-left: 5px solid #28a745; padding: 18px; margin: 18px 0; border-radius: 5px; }
+.illustration { text-align: center; margin: 25px 0; padding: 15px; background: #f0f0f0; border-radius: 10px; }
+.illustration svg { max-width: 100%; height: auto; }
+.exercise { background: #e3f2fd; border: 2px solid #2196f3; padding: 22px; margin: 25px 0; border-radius: 10px; }
+.exercise h4 { color: #1976d2; margin-bottom: 12px; font-size: 1.2em; }
+.exercise input, .exercise select, .exercise textarea {
+    padding: 10px; margin: 5px; border: 2px solid #ddd;
+    border-radius: 5px; font-size: 1em; font-family: inherit;
+}
+.exercise input[type="number"], .exercise input[type="text"] { width: 200px; }
+.exercise textarea { width: 100%; min-height: 80px; resize: vertical; }
+.exercise button {
+    background: #2196f3; color: white; border: none;
+    padding: 10px 25px; border-radius: 5px; cursor: pointer;
+    font-size: 1em; margin-top: 10px; transition: all 0.3s;
+}
+.exercise button:hover { background: #1976d2; transform: translateY(-2px); }
+.feedback { margin-top: 12px; padding: 12px; border-radius: 5px; font-weight: bold; display: none; }
+.feedback.correct { background: #d4edda; color: #155724; border: 2px solid #28a745; display: block; }
+.feedback.incorrect { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; display: block; }
+table { width: 100%; border-collapse: collapse; margin: 18px 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+th { background: #667eea; color: white; padding: 12px; text-align: left; }
+td { padding: 10px; border-bottom: 1px solid #ddd; }
+tr:hover { background: #f5f5f5; }
+.definition { background: white; border: 2px solid #667eea; padding: 14px; margin: 12px 0; border-radius: 8px; }
+.definition strong { color: #667eea; font-size: 1.05em; }
+.slider-container { margin: 15px 0; }
+.slider-container label { display: block; margin-bottom: 8px; font-weight: bold; }
+.slider-container input[type="range"] { width: 100%; height: 8px; border-radius: 5px; background: #ddd; outline: none; -webkit-appearance: none; }
+.slider-container input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #667eea; cursor: pointer; }
+.result-display { background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 1.1em; text-align: center; border: 2px solid #667eea; }
+.dilemma-card { background: white; border: 2px solid #e91e63; border-radius: 10px; padding: 18px; margin: 18px 0; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+.dilemma-card h4 { color: #c2185b; margin-bottom: 12px; }
+footer { background: #2c3e50; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+.progress-bar { width: 100%; height: 10px; background: #ddd; border-radius: 5px; margin: 15px 0; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.5s; width: 0%; }
+.glosario-item { background: #f8f9fa; padding: 15px; margin: 10px 0; border-left: 4px solid #667eea; border-radius: 5px; }
+.glosario-item h4 { color: #667eea; margin-bottom: 8px; }
+@media (max-width: 768px) {
+    header h1 { font-size: 1.6em; }
+    nav { flex-direction: column; }
+    nav button { width: 100%; }
+    .module { padding: 18px; }
+    .exercise input, .exercise select { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+    <h1>🏦 Taller de Arquitectura Financiera</h1>
+    <p>Del Registro Contable a la Toma de Decisiones</p>
+    <p style="font-size: 0.9em; margin-top: 8px;">Para jóvenes emprendedores de 12 a 14 años 🚀</p>
+</header>
+
+<nav>
+    <button onclick="showModule('intro')" class="active" id="btn-intro">🏠 Inicio</button>
+    <button onclick="showModule('mod1')" id="btn-mod1">📚 Módulo 1</button>
+    <button onclick="showModule('mod2')" id="btn-mod2">💰 Módulo 2</button>
+    <button onclick="showModule('mod3')" id="btn-mod3">📊 Módulo 3</button>
+    <button onclick="showModule('mod4')" id="btn-mod4">⚖️ Módulo 4</button>
+    <button onclick="showModule('glosario')" id="btn-glosario">📖 Glosario</button>
+</nav>
+
+<!-- INTRODUCCIÓN -->
+<div id="intro" class="module active">
+    <h2>¡Bienvenido al Mundo de las Finanzas! 🌟</h2>
+    
+    <div class="content-box">
+        <h3>🎯 ¿Qué vas a aprender?</h3>
+        <p>Imagina que tienes tu propio negocio: una tienda de videojuegos, una panadería o una empresa de ropa. ¿Cómo sabrías si estás ganando o perdiendo dinero? ¿Cómo decidirías si comprar más productos o contratar más empleados?</p>
+        <p>La <strong>contabilidad</strong> es como el cerebro de una empresa. Te ayuda a:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>✅ Recordar todas las transacciones (compras, ventas, pagos)</li>
+            <li>✅ Saber cuánto dinero tienes en cada momento</li>
+            <li>✅ Tomar decisiones inteligentes para hacer crecer tu negocio</li>
+            <li>✅ Evitar problemas legales y financieros</li>
+        </ul>
+    </div>
+
+    <div class="illustration">
+        <svg width="600" height="280" viewBox="0 0 600 280">
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="#764ba2" />
+                </marker>
+            </defs>
+            <rect x="50" y="90" width="140" height="130" fill="#667eea" rx="12"/>
+            <text x="120" y="150" text-anchor="middle" fill="white" font-size="16" font-weight="bold">TU</text>
+            <text x="120" y="175" text-anchor="middle" fill="white" font-size="16" font-weight="bold">NEGOCIO</text>
+            <text x="120" y="200" text-anchor="middle" fill="white" font-size="24">🏪</text>
+            <line x1="190" y1="155" x2="260" y2="155" stroke="#764ba2" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="260" y="90" width="140" height="130" fill="#764ba2" rx="12"/>
+            <text x="330" y="140" text-anchor="middle" fill="white" font-size="14" font-weight="bold">CONTABILIDAD</text>
+            <text x="330" y="165" text-anchor="middle" fill="white" font-size="12">(Registra todo)</text>
+            <text x="330" y="195" text-anchor="middle" fill="white" font-size="24">📊</text>
+            <line x1="400" y1="155" x2="470" y2="155" stroke="#667eea" stroke-width="3" marker-end="url(#arrowhead)"/>
+            <rect x="470" y="90" width="110" height="130" fill="#28a745" rx="12"/>
+            <text x="525" y="140" text-anchor="middle" fill="white" font-size="14" font-weight="bold">DECISIONES</text>
+            <text x="525" y="165" text-anchor="middle" fill="white" font-size="12">INTELIGENTES</text>
+            <text x="525" y="195" text-anchor="middle" fill="white" font-size="24">💡</text>
+            <text x="300" y="45" text-anchor="middle" fill="#333" font-size="20" font-weight="bold">El Ciclo Financiero</text>
+        </svg>
+    </div>
+
+    <div class="content-box">
+        <h3>📚 Los 4 Módulos del Taller</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 15px; margin-top: 15px;">
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                <h4 style="color: #1976d2;">📚 Módulo 1: El Registro</h4>
+                <p>Aprenderás a registrar todas las operaciones de tu negocio como un detective que guarda todas las pistas.</p>
+            </div>
+            <div style="background: #fff3e0; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                <h4 style="color: #f57c00;">💰 Módulo 2: Costos y Gastos</h4>
+                <p>Entenderás la diferencia entre lo que gastas para producir y lo que gastas para operar.</p>
+            </div>
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+                <h4 style="color: #388e3c;">📊 Módulo 3: Punto de Equilibrio</h4>
+                <p>Calcularás cuántas ventas necesitas hacer para no perder dinero.</p>
+            </div>
+            <div style="background: #fce4ec; padding: 15px; border-radius: 8px; border-left: 4px solid #e91e63;">
+                <h4 style="color: #c2185b;">⚖️ Módulo 4: Ética Financiera</h4>
+                <p>Aprenderás por qué la honestidad es el activo más valioso de un profesional.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="success-box">
+        <h3>🚀 ¡Comencemos la aventura!</h3>
+        <p>Haz clic en "Módulo 1" en el menú superior para empezar tu viaje por el mundo de las finanzas. ¡Prepárate para convertirte en un experto en tomar decisiones financieras inteligentes!</p>
+    </div>
+</div>
+
+<!-- MÓDULO 1: REGISTRO CONTABLE -->
+<div id="mod1" class="module">
+    <h2>📚 Módulo 1: La Mecánica del Registro Contable</h2>
+    
+    <div class="content-box">
+        <h3>🎯 ¿Qué es el Ciclo Contable?</h3>
+        <p>Imagina que cada vez que tu negocio hace algo (comprar, vender, pagar), deja una huella. El <strong>ciclo contable</strong> es el proceso de capturar esas huellas, organizarlas y convertirlas en información útil.</p>
+        <p>Es como llevar un diario de tu vida financiera, pero con reglas muy precisas para que todo quede claro y ordenado.</p>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">El Ciclo Contable Paso a Paso</h3>
+        <svg width="800" height="350" viewBox="0 0 800 350">
+            <defs>
+                <marker id="a1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <polygon points="0 0, 10 3, 0 6" fill="#333" />
+                </marker>
+            </defs>
+            <rect x="20" y="120" width="120" height="110" fill="#667eea" rx="10"/>
+            <text x="80" y="155" text-anchor="middle" fill="white" font-size="13" font-weight="bold">1. DOCUMENTO</text>
+            <text x="80" y="175" text-anchor="middle" fill="white" font-size="10">(Factura, recibo)</text>
+            <text x="80" y="210" text-anchor="middle" fill="white" font-size="28">📄</text>
+            <line x1="140" y1="175" x2="175" y2="175" stroke="#333" stroke-width="3" marker-end="url(#a1)"/>
+            <rect x="175" y="120" width="120" height="110" fill="#764ba2" rx="10"/>
+            <text x="235" y="155" text-anchor="middle" fill="white" font-size="13" font-weight="bold">2. LIBRO DIARIO</text>
+            <text x="235" y="175" text-anchor="middle" fill="white" font-size="10">(Cronológico)</text>
+            <text x="235" y="210" text-anchor="middle" fill="white" font-size="28">📖</text>
+            <line x1="295" y1="175" x2="330" y2="175" stroke="#333" stroke-width="3" marker-end="url(#a1)"/>
+            <rect x="330" y="120" width="120" height="110" fill="#e91e63" rx="10"/>
+            <text x="390" y="155" text-anchor="middle" fill="white" font-size="13" font-weight="bold">3. LIBRO MAYOR</text>
+            <text x="390" y="175" text-anchor="middle" fill="white" font-size="10">(Clasificación)</text>
+            <text x="390" y="210" text-anchor="middle" fill="white" font-size="28">📊</text>
+            <line x1="450" y1="175" x2="485" y2="175" stroke="#333" stroke-width="3" marker-end="url(#a1)"/>
+            <rect x="485" y="120" width="120" height="110" fill="#4caf50" rx="10"/>
+            <text x="545" y="155" text-anchor="middle" fill="white" font-size="13" font-weight="bold">4. BALANCE</text>
+            <text x="545" y="175" text-anchor="middle" fill="white" font-size="10">(Verificación)</text>
+            <text x="545" y="210" text-anchor="middle" fill="white" font-size="28">✓</text>
+            <line x1="605" y1="175" x2="640" y2="175" stroke="#333" stroke-width="3" marker-end="url(#a1)"/>
+            <rect x="640" y="120" width="140" height="110" fill="#ff9800" rx="10"/>
+            <text x="710" y="155" text-anchor="middle" fill="white" font-size="13" font-weight="bold">5. ESTADOS</text>
+            <text x="710" y="175" text-anchor="middle" fill="white" font-size="13" font-weight="bold">FINANCIEROS</text>
+            <text x="710" y="210" text-anchor="middle" fill="white" font-size="28">💼</text>
+            <text x="400" y="45" text-anchor="middle" fill="#333" font-size="22" font-weight="bold">El Flujo de la Información Contable</text>
+            <text x="400" y="290" text-anchor="middle" fill="#666" font-size="13">Cada paso transforma la información en algo más útil para tomar decisiones</text>
+        </svg>
+    </div>
+
+    <div class="definition">
+        <strong>📖 Libro Diario:</strong> Es como el diario personal de tu negocio. Aquí anotas TODAS las operaciones en el orden exacto en que ocurren, día tras día. Cada anotación se llama "asiento contable".
+    </div>
+
+    <div class="definition">
+        <strong>📊 Libro Mayor:</strong> Es como organizar tus apuntes por temas. Si en el diario anotaste todo por fecha, en el mayor agrupas todo lo que tiene que ver con "Caja", todo lo de "Inventarios", etc. Así sabes cuánto tienes en cada cosa.
+    </div>
+
+    <h3>🔑 La Regla de Oro: La Partida Doble</h3>
+    <div class="content-box">
+        <p>Imagina que cada transacción es como una balanza: siempre hay dos lados que deben estar en equilibrio.</p>
+        <p><strong>Ejemplo:</strong> Si compras una computadora para tu negocio por $1,000:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>✅ Tu negocio tiene una computadora nueva (+$1,000 en equipos)</li>
+            <li>✅ Pero también pagaste $1,000 en efectivo (-$1,000 en caja)</li>
+        </ul>
+        <p style="margin-top: 10px;"><strong>La suma de lo que entra debe ser igual a la suma de lo que sale. ¡Siempre!</strong></p>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">Ejemplo de Partida Doble</h3>
+        <svg width="600" height="250" viewBox="0 0 600 250">
+            <text x="300" y="30" text-anchor="middle" fill="#333" font-size="17" font-weight="bold">Compra de Computadora: $1,000</text>
+            <rect x="50" y="60" width="200" height="150" fill="#e3f2fd" stroke="#2196f3" stroke-width="3" rx="10"/>
+            <text x="150" y="90" text-anchor="middle" fill="#1976d2" font-size="15" font-weight="bold">DÉBITO (Entrada)</text>
+            <text x="150" y="125" text-anchor="middle" fill="#333" font-size="14">Equipos de Cómputo</text>
+            <text x="150" y="155" text-anchor="middle" fill="#2196f3" font-size="22" font-weight="bold">+$1,000</text>
+            <text x="150" y="185" text-anchor="middle" fill="#666" font-size="11">(Tienes más equipos)</text>
+            <text x="300" y="140" text-anchor="middle" fill="#333" font-size="28" font-weight="bold">=</text>
+            <rect x="350" y="60" width="200" height="150" fill="#fff3e0" stroke="#ff9800" stroke-width="3" rx="10"/>
+            <text x="450" y="90" text-anchor="middle" fill="#f57c00" font-size="15" font-weight="bold">CRÉDITO (Salida)</text>
+            <text x="450" y="125" text-anchor="middle" fill="#333" font-size="14">Caja / Efectivo</text>
+            <text x="450" y="155" text-anchor="middle" fill="#ff9800" font-size="22" font-weight="bold">-$1,000</text>
+            <text x="450" y="185" text-anchor="middle" fill="#666" font-size="11">(Tienes menos efectivo)</text>
+        </svg>
+    </div>
+
+    <h3>📋 Tipos de Cuentas</h3>
+    <div class="content-box">
+        <p>Las cuentas contables se dividen en 5 grandes grupos:</p>
+        <table>
+            <thead>
+                <tr><th>Tipo</th><th>¿Qué son?</th><th>Ejemplo</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>🏦 ACTIVOS</strong></td><td>Lo que tu negocio POSEE</td><td>Dinero en caja, computadoras, inventario</td></tr>
+                <tr><td><strong>💳 PASIVOS</strong></td><td>Lo que tu negocio DEBE</td><td>Préstamos bancarios, deudas con proveedores</td></tr>
+                <tr><td><strong>👥 PATRIMONIO</strong></td><td>Lo que realmente es TUYO (Activos - Pasivos)</td><td>Capital invertido por los dueños</td></tr>
+                <tr><td><strong>💰 INGRESOS</strong></td><td>Dinero que ENTRA por ventas</td><td>Venta de productos, servicios prestados</td></tr>
+                <tr><td><strong>💸 GASTOS</strong></td><td>Dinero que SALE para operar</td><td>Arriendo, servicios públicos, salarios</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Ejercicio Interactivo: Clasifica las Cuentas</h4>
+        <p>Selecciona la categoría correcta para cada elemento:</p>
+        <div style="margin: 15px 0;">
+            <p><strong>1. Dinero en la caja registradora:</strong></p>
+            <select id="q1"><option value="">-- Selecciona --</option><option value="activo">Activo</option><option value="pasivo">Pasivo</option><option value="patrimonio">Patrimonio</option><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p><strong>2. Préstamo del banco para comprar equipos:</strong></p>
+            <select id="q2"><option value="">-- Selecciona --</option><option value="activo">Activo</option><option value="pasivo">Pasivo</option><option value="patrimonio">Patrimonio</option><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p><strong>3. Venta de productos a un cliente:</strong></p>
+            <select id="q3"><option value="">-- Selecciona --</option><option value="activo">Activo</option><option value="pasivo">Pasivo</option><option value="patrimonio">Patrimonio</option><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p><strong>4. Pago de arriendo del local:</strong></p>
+            <select id="q4"><option value="">-- Selecciona --</option><option value="activo">Activo</option><option value="pasivo">Pasivo</option><option value="patrimonio">Patrimonio</option><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select>
+        </div>
+        <button onclick="checkClassification()">Verificar Respuestas</button>
+        <div id="classification-feedback" class="feedback"></div>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Ejercicio: Registra una Transacción</h4>
+        <p><strong>Situación:</strong> Tu tienda de videojuegos vende 5 juegos a $50 cada uno. El cliente paga en efectivo.</p>
+        <div style="margin: 15px 0;">
+            <p>¿Cuánto dinero entra a tu caja?</p>
+            <input type="number" id="cash-in" placeholder="Cantidad en dólares">
+        </div>
+        <div style="margin: 15px 0;">
+            <p>¿Qué cuenta aumenta? (lo que tienes más)</p>
+            <select id="account-increase"><option value="">-- Selecciona --</option><option value="caja">Caja (Efectivo)</option><option value="inventario">Inventario</option><option value="deuda">Deuda con proveedor</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p>¿Qué cuenta de ingreso se registra?</p>
+            <select id="income-account"><option value="">-- Selecciona --</option><option value="ventas">Ventas</option><option value="compras">Compras</option><option value="gastos">Gastos</option></select>
+        </div>
+        <button onclick="checkTransaction()">Verificar Registro</button>
+        <div id="transaction-feedback" class="feedback"></div>
+    </div>
+
+    <div class="success-box">
+        <h3>🎉 ¡Felicidades!</h3>
+        <p>Has aprendido los conceptos básicos del registro contable. Recuerda:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>✅ Todo se registra en orden cronológico (Libro Diario)</li>
+            <li>✅ Luego se clasifica por tipo (Libro Mayor)</li>
+            <li>✅ Siempre debe haber equilibrio (Partida Doble)</li>
+        </ul>
+        <p style="margin-top: 10px;">Ahora estás listo para el Módulo 2, donde aprenderás sobre costos y gastos.</p>
+    </div>
+</div>
+
+<!-- MÓDULO 2: COSTOS Y GASTOS -->
+<div id="mod2" class="module">
+    <h2>💰 Módulo 2: Costos, Gastos y Utilidades</h2>
+    
+    <div class="content-box">
+        <h3>🎯 ¿Costo o Gasto? ¡No son lo mismo!</h3>
+        <p>Mucha gente confunde estos términos, pero son muy diferentes:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li><strong>COSTO:</strong> Dinero que gastas para FABRICAR o COMPRAR el producto que vendes</li>
+            <li><strong>GASTO:</strong> Dinero que gastas para OPERAR el negocio (vender, administrar)</li>
+        </ul>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">Ejemplo: Fábrica de Camisetas</h3>
+        <svg width="700" height="330" viewBox="0 0 700 330">
+            <text x="350" y="30" text-anchor="middle" fill="#333" font-size="18" font-weight="bold">¿Qué es Costo y qué es Gasto?</text>
+            <rect x="40" y="55" width="290" height="260" fill="#e8f5e9" stroke="#4caf50" stroke-width="3" rx="10"/>
+            <text x="185" y="85" text-anchor="middle" fill="#2e7d32" font-size="17" font-weight="bold">💚 COSTOS</text>
+            <text x="185" y="105" text-anchor="middle" fill="#666" font-size="12">(Para producir)</text>
+            <text x="60" y="135" fill="#333" font-size="13">🧵 Tela para camisetas</text>
+            <text x="60" y="160" fill="#333" font-size="13">👷 Salario de costurera</text>
+            <text x="60" y="185" fill="#333" font-size="13">🎨 Tinta para estampar</text>
+            <text x="60" y="210" fill="#333" font-size="13">📦 Empaque del producto</text>
+            <text x="60" y="235" fill="#333" font-size="13">⚡ Luz de la fábrica</text>
+            <text x="185" y="290" text-anchor="middle" fill="#2e7d32" font-size="11" font-style="italic">Se incorporan al producto</text>
+            <rect x="370" y="55" width="290" height="260" fill="#fff3e0" stroke="#ff9800" stroke-width="3" rx="10"/>
+            <text x="515" y="85" text-anchor="middle" fill="#e65100" font-size="17" font-weight="bold">🧡 GASTOS</text>
+            <text x="515" y="105" text-anchor="middle" fill="#666" font-size="12">(Para operar)</text>
+            <text x="390" y="135" fill="#333" font-size="13">📢 Publicidad en redes</text>
+            <text x="390" y="160" fill="#333" font-size="13">💼 Salario del contador</text>
+            <text x="390" y="185" fill="#333" font-size="13">🏢 Arriendo de oficina</text>
+            <text x="390" y="210" fill="#333" font-size="13">🚚 Envío al cliente</text>
+            <text x="390" y="235" fill="#333" font-size="13">💳 Intereses del banco</text>
+            <text x="515" y="290" text-anchor="middle" fill="#e65100" font-size="11" font-style="italic">Se consumen en el período</text>
+        </svg>
+    </div>
+
+    <h3>📊 Los 3 Niveles de Utilidad</h3>
+    <div class="content-box">
+        <p>Imagina que la utilidad es como una cebolla con varias capas. Cada capa te dice algo diferente sobre tu negocio:</p>
+        
+        <div class="definition">
+            <strong>1️⃣ UTILIDAD BRUTA = Ventas - Costo de Ventas</strong>
+            <p>Te dice qué tan bueno eres FABRICANDO o COMPRANDO productos. Si es baja, tu producto es muy caro de hacer.</p>
+        </div>
+        
+        <div class="definition">
+            <strong>2️⃣ UTILIDAD OPERATIVA = Utilidad Bruta - Gastos Operativos</strong>
+            <p>Te dice qué tan bueno eres ADMINISTRANDO el negocio. Si es baja, gastas mucho en publicidad, arriendos, etc.</p>
+        </div>
+        
+        <div class="definition">
+            <strong>3️⃣ UTILIDAD NETA = Utilidad Operativa - Impuestos - Intereses</strong>
+            <p>Es lo que REALMENTE te queda al final. ¡El dinero que puedes usar para ti o reinvertir!</p>
+        </div>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">La Pirámide de la Utilidad</h3>
+        <svg width="500" height="400" viewBox="0 0 500 400">
+            <!-- Pirámide invertida -->
+            <polygon points="50,50 450,50 400,130 100,130" fill="#667eea" stroke="#333" stroke-width="2"/>
+            <text x="250" y="85" text-anchor="middle" fill="white" font-size="15" font-weight="bold">VENTAS TOTALES: $10,000</text>
+            <text x="250" y="110" text-anchor="middle" fill="white" font-size="12">(Todo lo que entra)</text>
+            
+            <polygon points="100,140 400,140 360,210 140,210" fill="#764ba2" stroke="#333" stroke-width="2"/>
+            <text x="250" y="170" text-anchor="middle" fill="white" font-size="14" font-weight="bold">(-) COSTOS: $6,000</text>
+            <text x="250" y="195" text-anchor="middle" fill="white" font-size="12">= UTILIDAD BRUTA: $4,000</text>
+            
+            <polygon points="140,220 360,220 320,280 180,280" fill="#e91e63" stroke="#333" stroke-width="2"/>
+            <text x="250" y="245" text-anchor="middle" fill="white" font-size="13" font-weight="bold">(-) GASTOS: $2,000</text>
+            <text x="250" y="268" text-anchor="middle" fill="white" font-size="12">= UTILIDAD OPERATIVA: $2,000</text>
+            
+            <polygon points="180,290 320,290 290,340 210,340" fill="#ff9800" stroke="#333" stroke-width="2"/>
+            <text x="250" y="312" text-anchor="middle" fill="white" font-size="12" font-weight="bold">(-) IMPUESTOS: $500</text>
+            <text x="250" y="332" text-anchor="middle" fill="white" font-size="11">= UTILIDAD NETA</text>
+            
+            <polygon points="210,350 290,350 270,385 230,385" fill="#4caf50" stroke="#333" stroke-width="2"/>
+            <text x="250" y="372" text-anchor="middle" fill="white" font-size="13" font-weight="bold">$1,500 💰</text>
+        </svg>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Calculadora de Utilidades</h4>
+        <p>Imagina que tienes una tienda de helados. Ingresa los valores y calcula tus utilidades:</p>
+        
+        <div class="slider-container">
+            <label>💵 Ventas del mes: $<span id="ventas-value">10000</span></label>
+            <input type="range" id="ventas" min="0" max="50000" value="10000" step="500" oninput="calcularUtilidades()">
+        </div>
+        
+        <div class="slider-container">
+            <label>🍦 Costos (helados, conos, ingredientes): $<span id="costos-value">4000</span></label>
+            <input type="range" id="costos" min="0" max="30000" value="4000" step="500" oninput="calcularUtilidades()">
+        </div>
+        
+        <div class="slider-container">
+            <label>🏢 Gastos (arriendo, luz, salarios): $<span id="gastos-value">2000</span></label>
+            <input type="range" id="gastos" min="0" max="20000" value="2000" step="500" oninput="calcularUtilidades()">
+        </div>
+        
+        <div class="slider-container">
+            <label>🏛️ Impuestos (25% de la utilidad operativa): $<span id="impuestos-value">1000</span></label>
+        </div>
+        
+        <div class="result-display">
+            <h4 style="color: #667eea;">📊 Resultados:</h4>
+            <p><strong>Utilidad Bruta:</strong> $<span id="ub">6000</span></p>
+            <p><strong>Utilidad Operativa:</strong> $<span id="uo">4000</span></p>
+            <p style="color: #4caf50; font-size: 1.2em;"><strong>💰 UTILIDAD NETA: $<span id="un">3000</span></strong></p>
+            <p style="margin-top: 10px;"><strong>Margen Neto:</strong> <span id="margen">30%</span> (de cada $100 que vendes, te quedan $<span id="margen-val">30</span>)</p>
+        </div>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Ejercicio: ¿Costo o Gasto?</h4>
+        <p>Clasifica cada partida de una fábrica de zapatos:</p>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>1. Cuero para hacer zapatos:</strong></p>
+            <select id="c1"><option value="">-- Selecciona --</option><option value="costo">Costo</option><option value="gasto">Gasto</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p><strong>2. Salario del vendedor en la tienda:</strong></p>
+            <select id="c2"><option value="">-- Selecciona --</option><option value="costo">Costo</option><option value="gasto">Gasto</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p><strong>3. Salario del obrero que cose los zapatos:</strong></p>
+            <select id="c3"><option value="">-- Selecciona --</option><option value="costo">Costo</option><option value="gasto">Gasto</option></select>
+        </div>
+        <div style="margin: 15px 0;">
+            <p><strong>4. Publicidad en Instagram:</strong></p>
+            <select id="c4"><option value="">-- Selecciona --</option><option value="costo">Costo</option><option value="gasto">Gasto</option></select>
+        </div>
+        
+        <button onclick="checkCostos()">Verificar Respuestas</button>
+        <div id="costos-feedback" class="feedback"></div>
+    </div>
+
+    <div class="success-box">
+        <h3>🎉 ¡Excelente trabajo!</h3>
+        <p>Ahora sabes diferenciar costos y gastos, y puedes calcular los tres niveles de utilidad. Esto es clave para entender si tu negocio es realmente rentable.</p>
+        <p style="margin-top: 10px;">En el Módulo 3 aprenderás algo súper importante: ¿cuánto necesitas vender para no perder dinero?</p>
+    </div>
+</div>
+
+<!-- MÓDULO 3: PUNTO DE EQUILIBRIO -->
+<div id="mod3" class="module">
+    <h2>📊 Módulo 3: Punto de Equilibrio</h2>
+    
+    <div class="content-box">
+        <h3>🎯 ¿Qué es el Punto de Equilibrio?</h3>
+        <p>El <strong>Punto de Equilibrio (PE)</strong> es el número mágico que te dice: <em>"Si vendes ESTA cantidad, no ganas ni pierdes. Si vendes más, ganas. Si vendes menos, pierdes."</em></p>
+        <p>Es como saber cuántas entradas necesitas vender para que tu concierto no dé pérdidas. ¡Es la herramienta de supervivencia de cualquier negocio!</p>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">El Gráfico del Punto de Equilibrio</h3>
+        <svg width="600" height="400" viewBox="0 0 600 400">
+            <!-- Ejes -->
+            <line x1="80" y1="350" x2="560" y2="350" stroke="#333" stroke-width="2"/>
+            <line x1="80" y1="350" x2="80" y2="50" stroke="#333" stroke-width="2"/>
+            
+            <!-- Etiquetas ejes -->
+            <text x="320" y="385" text-anchor="middle" fill="#333" font-size="14" font-weight="bold">Cantidad de productos vendidos →</text>
+            <text x="30" y="200" text-anchor="middle" fill="#333" font-size="14" font-weight="bold" transform="rotate(-90, 30, 200)">Dinero ($) →</text>
+            
+            <!-- Línea de Costos Fijos (horizontal) -->
+            <line x1="80" y1="250" x2="560" y2="250" stroke="#e91e63" stroke-width="3" stroke-dasharray="5,5"/>
+            <text x="565" y="245" fill="#e91e63" font-size="12" font-weight="bold">Costos Fijos</text>
+            
+            <!-- Línea de Costos Totales -->
+            <line x1="80" y1="250" x2="560" y2="100" stroke="#ff9800" stroke-width="3"/>
+            <text x="500" y="130" fill="#ff9800" font-size="12" font-weight="bold">Costos Totales</text>
+            
+            <!-- Línea de Ingresos -->
+            <line x1="80" y1="350" x2="560" y2="80" stroke="#4caf50" stroke-width="3"/>
+            <text x="500" y="95" fill="#4caf50" font-size="12" font-weight="bold">Ingresos</text>
+            
+            <!-- Punto de equilibrio -->
+            <circle cx="320" cy="180" r="8" fill="#667eea" stroke="#333" stroke-width="2"/>
+            <line x1="320" y1="180" x2="320" y2="350" stroke="#667eea" stroke-width="2" stroke-dasharray="3,3"/>
+            <text x="320" y="365" text-anchor="middle" fill="#667eea" font-size="13" font-weight="bold">PUNTO DE EQUILIBRIO</text>
+            
+            <!-- Zonas -->
+            <text x="200" y="220" text-anchor="middle" fill="#dc3545" font-size="14" font-weight="bold">ZONA DE PÉRDIDAS ❌</text>
+            <text x="450" y="150" text-anchor="middle" fill="#28a745" font-size="14" font-weight="bold">ZONA DE GANANCIAS ✅</text>
+            
+            <!-- Título -->
+            <text x="300" y="30" text-anchor="middle" fill="#333" font-size="18" font-weight="bold">Gráfico del Punto de Equilibrio</text>
+        </svg>
+    </div>
+
+    <h3>🔑 Los 3 Tipos de Costos</h3>
+    <div class="content-box">
+        <div class="definition">
+            <strong>🏢 COSTOS FIJOS:</strong> No cambian sin importar cuánto produzcas. Los pagues producir 1 o 1000 unidades.
+            <p style="margin-top: 5px;"><em>Ejemplos:</em> Arriendo, salario del gerente, seguros, internet.</p>
+        </div>
+        
+        <div class="definition">
+            <strong>📦 COSTOS VARIABLES:</strong> Cambian según cuánto produzcas. Si produces más, pagas más.
+            <p style="margin-top: 5px;"><em>Ejemplos:</em> Materia prima, empaques, comisiones de venta.</p>
+        </div>
+        
+        <div class="definition">
+            <strong>💡 MARGEN DE CONTRIBUCIÓN:</strong> Es lo que cada producto aporta para cubrir los costos fijos.
+            <p style="margin-top: 5px;"><em>Fórmula:</em> Precio de Venta - Costo Variable Unitario</p>
+        </div>
+    </div>
+
+    <h3>📐 La Fórmula Mágica</h3>
+    <div class="example-box">
+        <h4 style="color: #f57c00;">PUNTO DE EQUILIBRIO (en unidades) =</h4>
+        <p style="text-align: center; font-size: 1.3em; margin: 15px 0;"><strong>Costos Fijos Totales ÷ Margen de Contribución Unitario</strong></p>
+        <p>Donde: <strong>Margen de Contribución = Precio de Venta - Costo Variable Unitario</strong></p>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">Ejemplo: Pizzería "La Delicia"</h3>
+        <svg width="600" height="320" viewBox="0 0 600 320">
+            <rect x="50" y="40" width="500" height="260" fill="#fff3e0" stroke="#ff9800" stroke-width="3" rx="10"/>
+            <text x="300" y="70" text-anchor="middle" fill="#e65100" font-size="18" font-weight="bold">🍕 Pizzería "La Delicia"</text>
+            
+            <text x="80" y="105" fill="#333" font-size="14">💵 Precio de venta por pizza: <tspan font-weight="bold" fill="#4caf50">$20</tspan></text>
+            <text x="80" y="130" fill="#333" font-size="14">🧀 Costo variable por pizza (ingredientes): <tspan font-weight="bold" fill="#ff9800">$8</tspan></text>
+            <text x="80" y="155" fill="#333" font-size="14">🏢 Costos fijos mensuales (arriendo, luz, sueldos): <tspan font-weight="bold" fill="#e91e63">$3,600</tspan></text>
+            
+            <line x1="80" y1="175" x2="520" y2="175" stroke="#333" stroke-width="1"/>
+            
+            <text x="80" y="200" fill="#333" font-size="14">💡 Margen de Contribución = $20 - $8 = <tspan font-weight="bold" fill="#667eea">$12</tspan></text>
+            <text x="80" y="225" fill="#333" font-size="14">🎯 Punto de Equilibrio = $3,600 ÷ $12 = <tspan font-weight="bold" fill="#4caf50">300 pizzas al mes</tspan></text>
+            
+            <text x="300" y="265" text-anchor="middle" fill="#333" font-size="13" font-style="italic">Si vendes más de 300 pizzas, ganas dinero.</text>
+            <text x="300" y="285" text-anchor="middle" fill="#333" font-size="13" font-style="italic">Si vendes menos, ¡pierdes dinero!</text>
+        </svg>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Calculadora del Punto de Equilibrio</h4>
+        <p>¡Calcula el PE de tu propio negocio! Ajusta los valores:</p>
+        
+        <div class="slider-container">
+            <label>💵 Precio de venta unitario: $<span id="pv-value">50</span></label>
+            <input type="range" id="pv" min="10" max="200" value="50" step="5" oninput="calcularPE()">
+        </div>
+        
+        <div class="slider-container">
+            <label>📦 Costo variable unitario: $<span id="cv-value">20</span></label>
+            <input type="range" id="cv" min="5" max="150" value="20" step="5" oninput="calcularPE()">
+        </div>
+        
+        <div class="slider-container">
+            <label>🏢 Costos fijos totales: $<span id="cf-value">5000</span></label>
+            <input type="range" id="cf" min="1000" max="50000" value="5000" step="500" oninput="calcularPE()">
+        </div>
+        
+        <div class="result-display">
+            <h4 style="color: #667eea;">📊 Resultados:</h4>
+            <p><strong>Margen de Contribución:</strong> $<span id="mc">30</span> por unidad</p>
+            <p style="font-size: 1.3em; color: #4caf50;"><strong>🎯 PUNTO DE EQUILIBRIO: <span id="pe">167</span> unidades</strong></p>
+            <p style="margin-top: 10px;">En dinero: $<span id="pe-dinero">8,350</span></p>
+            <p style="margin-top: 10px; font-style: italic;">Necesitas vender <span id="pe-text">167</span> productos para no perder dinero.</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h4 style="color: #667eea;">📈 Gráfico del Punto de Equilibrio:</h4>
+            <svg id="pe-chart" width="100%" height="300" viewBox="0 0 600 300" style="background: white; border: 1px solid #ddd; border-radius: 5px;"></svg>
+        </div>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Ejercicio: Análisis de Escenarios</h4>
+        <p><strong>Situación:</strong> Tienes una tienda de camisetas. Tu PE es de 200 camisetas al mes. Actualmente vendes 300.</p>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>Escenario 1:</strong> Un competidor abre cerca y tus ventas bajan a 180 camisetas. ¿Qué pasa?</p>
+            <select id="esc1"><option value="">-- Selecciona --</option><option value="ganas">Ganas dinero</option><option value="pierdes">Pierdes dinero</option><option value="equilibrio">Estás en equilibrio</option></select>
+        </div>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>Escenario 2:</strong> Haces una promoción y vendes 400 camisetas. ¿Qué pasa?</p>
+            <select id="esc2"><option value="">-- Selecciona --</option><option value="ganas">Ganas dinero</option><option value="pierdes">Pierdes dinero</option><option value="equilibrio">Estás en equilibrio</option></select>
+        </div>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>Escenario 3:</strong> ¿Cuál es tu Margen de Seguridad? (¿cuánto pueden caer tus ventas antes de perder?)</p>
+            <select id="esc3"><option value="">-- Selecciona --</option><option value="33">33%</option><option value="50">50%</option><option value="25">25%</option><option value="20">20%</option></select>
+        </div>
+        
+        <button onclick="checkEscenarios()">Verificar Respuestas</button>
+        <div id="escenarios-feedback" class="feedback"></div>
+    </div>
+
+    <div class="content-box">
+        <h3>💡 ¿Por qué es importante el Punto de Equilibrio?</h3>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>✅ Te dice el <strong>mínimo</strong> que debes vender para sobrevivir</li>
+            <li>✅ Te ayuda a fijar <strong>metas de venta</strong> realistas</li>
+            <li>✅ Te muestra qué tan <strong>vulnerable</strong> es tu negocio ante crisis</li>
+            <li>✅ Te permite evaluar si puedes <strong>bajar precios</strong> sin perder dinero</li>
+        </ul>
+    </div>
+
+    <div class="success-box">
+        <h3>🎉 ¡Increíble!</h3>
+        <p>Ahora sabes calcular el Punto de Equilibrio y entender qué tan seguro es tu negocio. Esta es una de las herramientas más poderosas para cualquier emprendedor.</p>
+        <p style="margin-top: 10px;">En el Módulo 4 aprenderás algo igual de importante: ¡la ética financiera!</p>
+    </div>
+</div>
+
+<!-- MÓDULO 4: ÉTICA -->
+<div id="mod4" class="module">
+    <h2>⚖️ Módulo 4: Ética y Transparencia Financiera</h2>
+    
+    <div class="content-box">
+        <h3>🎯 ¿Por qué importa la ética en las finanzas?</h3>
+        <p>Imagina que descubres que tu amigo está haciendo trampa en un examen. ¿Lo reportas? ¿Lo ignoras? En las finanzas pasa algo similar: a veces hay presión para "maquillar" los números y hacer que el negocio se vea mejor de lo que es.</p>
+        <p><strong>Pero ojo:</strong> La contabilidad creativa NO es creatividad. Es fraude con disfraz de ingenio. Y las consecuencias son muy serias.</p>
+    </div>
+
+    <div class="illustration">
+        <h3 style="text-align: center; color: #667eea;">La Ecuación de la Confianza</h3>
+        <svg width="600" height="200" viewBox="0 0 600 200">
+            <rect x="50" y="50" width="500" height="100" fill="#e3f2fd" stroke="#2196f3" stroke-width="3" rx="10"/>
+            <text x="300" y="85" text-anchor="middle" fill="#1976d2" font-size="18" font-weight="bold">CONFIANZA =</text>
+            <text x="300" y="115" text-anchor="middle" fill="#333" font-size="16">Transparencia × Consistencia × Tiempo</text>
+            <text x="300" y="140" text-anchor="middle" fill="#666" font-size="12" font-style="italic">Se construye poco a poco, pero se pierde en un instante</text>
+        </svg>
+    </div>
+
+    <h3>🚫 El Triángulo del Fraude</h3>
+    <div class="content-box">
+        <p>Los expertos dicen que para que ocurra un fraude financiero, se necesitan 3 cosas:</p>
+        
+        <div class="illustration">
+            <svg width="400" height="350" viewBox="0 0 400 350">
+                <!-- Triángulo -->
+                <polygon points="200,50 50,300 350,300" fill="#fff3e0" stroke="#e91e63" stroke-width="3"/>
+                
+                <!-- Vértice superior: Presión -->
+                <circle cx="200" cy="50" r="35" fill="#e91e63"/>
+                <text x="200" y="55" text-anchor="middle" fill="white" font-size="14" font-weight="bold">PRESIÓN</text>
+                <text x="200" y="105" text-anchor="middle" fill="#333" font-size="11">"Necesito mostrar</text>
+                <text x="200" y="120" text-anchor="middle" fill="#333" font-size="11">buenos resultados"</text>
+                
+                <!-- Vértice inferior izquierdo: Oportunidad -->
+                <circle cx="50" cy="300" r="35" fill="#ff9800"/>
+                <text x="50" y="305" text-anchor="middle" fill="white" font-size="13" font-weight="bold">OPORTUNIDAD</text>
+                <text x="130" y="260" text-anchor="middle" fill="#333" font-size="11">"No hay controles</text>
+                <text x="130" y="275" text-anchor="middle" fill="#333" font-size="11">que me detecten"</text>
+                
+                <!-- Vértice inferior derecho: Racionalización -->
+                <circle cx="350" cy="300" r="35" fill="#9c27b0"/>
+                <text x="350" y="295" text-anchor="middle" fill="white" font-size="12" font-weight="bold">RACIONALIZACIÓN</text>
+                <text x="350" y="310" text-anchor="middle" fill="white" font-size="10">"Todos lo hacen"</text>
+                <text x="270" y="260" text-anchor="middle" fill="#333" font-size="11">"Solo es temporal,</text>
+                <text x="270" y="275" text-anchor="middle" fill="#333" font-size="11">después lo arreglo"</text>
+                
+                <text x="200" y="340" text-anchor="middle" fill="#333" font-size="13" font-weight="bold">El Triángulo del Fraude</text>
+            </svg>
+        </div>
+    </div>
+
+    <h3>📜 Los 4 Principios Sagrados de la Contabilidad</h3>
+    <div class="content-box">
+        <div class="definition">
+            <strong>1️⃣ Principio de Asociación:</strong> Los costos y gastos deben registrarse en el MISMO período en que se generan los ingresos que ayudaron a producir. No puedes "esconder" gastos hoy para mostrar mejores números.
+        </div>
+        
+        <div class="definition">
+            <strong>2️⃣ Principio de Causación:</strong> Las transacciones se registran CUANDO OCURREN, no cuando se pagan. Si recibiste un servicio en diciembre, el gasto va en diciembre, aunque lo pagues en enero.
+        </div>
+        
+        <div class="definition">
+            <strong>3️⃣ Principio de Prudencia:</strong> Ante la duda, sé conservador. No exageres tus activos ni ingresos, ni escondas tus deudas o problemas. Mejor prevenir que lamentar.
+        </div>
+        
+        <div class="definition">
+            <strong>4️⃣ Principio de Revelación Plena:</strong> Debes contar TODA la verdad. Si hay un problema grave (una demanda, un cliente que no va a pagar), debes decirlo. No basta con que los números cuadren; hay que ser transparentes.
+        </div>
+    </div>
+
+    <h3>🎭 Casos de la Vida Real: Dilemas Éticos</h3>
+    
+    <div class="dilemma-card">
+        <h4>🎯 Dilema 1: El Contrato Anticipado</h4>
+        <p>El gerente de una empresa constructora te pide que registres como ingreso de este año el valor TOTAL de un contrato de construcción de un centro comercial, aunque la obra apenas lleva el 25% y terminará en 3 años. Dice: "El contrato está firmado y el dinero está garantizado".</p>
+        <p style="margin-top: 10px;"><strong>¿Qué harías?</strong></p>
+        <textarea id="dilema1" placeholder="Escribe tu respuesta aquí..."></textarea>
+        <button onclick="analizarDilema(1)">Analizar Dilema</button>
+        <div id="dilema1-feedback" class="feedback"></div>
+    </div>
+
+    <div class="dilemma-card">
+        <h4>🎯 Dilema 2: La Demanda Oculta</h4>
+        <p>La directora financiera te pide que NO registres una demanda laboral millonaria contra la empresa, argumentando: "El abogado dice que tenemos 60% de probabilidad de ganar, y si lo registramos, asustaremos a los inversionistas".</p>
+        <p style="margin-top: 10px;"><strong>¿Qué harías?</strong></p>
+        <textarea id="dilema2" placeholder="Escribe tu respuesta aquí..."></textarea>
+        <button onclick="analizarDilema(2)">Analizar Dilema</button>
+        <div id="dilema2-feedback" class="feedback"></div>
+    </div>
+
+    <div class="dilemma-card">
+        <h4>🎯 Dilema 3: Los Gastos Disfrazados</h4>
+        <p>El dueño de una empresa de transporte te pide que registres las reparaciones mayores de 15 camiones ($200,000) como "mejoras al activo fijo" en vez de gasto, para no afectar la utilidad del trimestre. Las reparaciones solo devolvieron los camiones a su estado original.</p>
+        <p style="margin-top: 10px;"><strong>¿Qué harías?</strong></p>
+        <textarea id="dilema3" placeholder="Escribe tu respuesta aquí..."></textarea>
+        <button onclick="analizarDilema(3)">Analizar Dilema</button>
+        <div id="dilema3-feedback" class="feedback"></div>
+    </div>
+
+    <div class="exercise">
+        <h4>🎮 Ejercicio: Identifica el Principio Violado</h4>
+        <p>Para cada situación, identifica qué principio contable se está violando:</p>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>1. Una empresa no registra una fuerte multa que recibió porque "arruinaría" la imagen:</strong></p>
+            <select id="p1"><option value="">-- Selecciona --</option><option value="asociacion">Asociación</option><option value="causacion">Causación</option><option value="prudencia">Prudencia</option><option value="revelacion">Revelación Plena</option></select>
+        </div>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>2. Una empresa registra en enero los gastos de diciembre porque "así se ve mejor el año":</strong></p>
+            <select id="p2"><option value="">-- Selecciona --</option><option value="asociacion">Asociación</option><option value="causacion">Causación</option><option value="prudencia">Prudencia</option><option value="revelacion">Revelación Plena</option></select>
+        </div>
+        
+        <div style="margin: 15px 0;">
+            <p><strong>3. Una empresa registra el costo de la mercancía vendida en un mes diferente al de la venta:</strong></p>
+            <select id="p3"><option value="">-- Selecciona --</option><option value="asociacion">Asociación</option><option value="causacion">Causación</option><option value="prudencia">Prudencia</option><option value="revelacion">Revelación Plena</option></select>
+        </div>
+        
+        <button onclick="checkPrincipios()">Verificar Respuestas</button>
+        <div id="principios-feedback" class="feedback"></div>
+    </div>
+
+    <div class="warning-box">
+        <h3>⚠️ Las Consecuencias del Fraude</h3>
+        <p>Cuando se manipulan los números, las consecuencias son reales y graves:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>❌ <strong>Empleados</strong> pierden sus trabajos cuando la empresa quiebra</li>
+            <li>❌ <strong>Inversionistas</strong> pierden sus ahorros</li>
+            <li>❌ <strong>Proveedores</strong> no cobran sus facturas</li>
+            <li>❌ <strong>El contador</strong> puede ir a la cárcel y perder su licencia profesional</li>
+            <li>❌ <strong>La sociedad</strong> pierde confianza en las empresas</li>
+        </ul>
+    </div>
+
+    <div class="success-box">
+        <h3>💎 La Integridad: Tu Activo Más Valioso</h3>
+        <p>Recuerda siempre:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>✅ Tu reputación se construye en años, pero se pierde en un día</li>
+            <li>✅ Es mejor entregar resultados honestos (aunque sean modestos) que resultados brillantes pero falsos</li>
+            <li>✅ La transparencia es el fundamento de la confianza pública</li>
+            <li>✅ Como futuro profesional, tu firma en un documento es un juramento de verdad</li>
+        </ul>
+    </div>
+</div>
+
+<!-- GLOSARIO -->
+<div id="glosario" class="module">
+    <h2>📖 Glosario Financiero</h2>
+    
+    <div class="content-box">
+        <p>Aquí encontrarás las definiciones de los términos más importantes que aprendiste en este taller. ¡Úsalo como referencia!</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>📚 Asiento Contable</h4>
+        <p>Registro formal de una transacción económica en el Libro Diario. Incluye fecha, cuentas afectadas, valores en débito y crédito, y una descripción. Debe cumplir la regla de la partida doble.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>⚖️ Partida Doble</h4>
+        <p>Principio universal de la contabilidad que establece que toda transacción afecta al menos dos cuentas en sentidos opuestos. Es como la Tercera Ley de Newton aplicada a la economía: "toda acción tiene una reacción igual y contraria".</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>📖 Libro Diario</h4>
+        <p>Registro primario donde se anotan todas las transacciones en el orden exacto en que ocurrieron, día tras día. Es la "bitácora" del negocio.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>📊 Libro Mayor</h4>
+        <p>Registro secundario donde cada cuenta contable tiene su propia página. Agrupa todos los movimientos que afectaron cada cuenta durante el período. Responde a la pregunta: "¿cuánto hay realmente en cada cuenta?"</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🏦 Activo</h4>
+        <p>Todo lo que tu negocio POSEE y tiene valor: dinero en caja, bancos, inventarios, equipos, computadoras, vehículos, etc.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>💳 Pasivo</h4>
+        <p>Todo lo que tu negocio DEBE: préstamos bancarios, deudas con proveedores, obligaciones pendientes de pago.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>👥 Patrimonio</h4>
+        <p>Lo que realmente es de los dueños del negocio. Se calcula: Patrimonio = Activos - Pasivos. También se llama "capital" o "capital contable".</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>💰 Ingreso</h4>
+        <p>Dinero que entra al negocio por la venta de productos o servicios. Aumenta el patrimonio.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>💸 Gasto</h4>
+        <p>Dinero que sale del negocio para operar (arriendos, salarios administrativos, publicidad, servicios públicos). No se incorpora al producto.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🏭 Costo</h4>
+        <p>Dinero gastado para FABRICAR o COMPRAR el producto que se vende. Se incorpora al producto y solo se convierte en gasto cuando el producto se vende (Costo de Ventas).</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>📈 Utilidad Bruta</h4>
+        <p>Ventas Netas - Costo de Ventas. Mide qué tan eficiente eres produciendo o comprando productos.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>💼 Utilidad Operativa</h4>
+        <p>Utilidad Bruta - Gastos Operativos. Mide qué tan eficiente eres administrando el negocio.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>💎 Utilidad Neta</h4>
+        <p>Utilidad Operativa - Impuestos - Intereses. Es lo que realmente queda para los dueños después de pagar todo.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🎯 Punto de Equilibrio</h4>
+        <p>Nivel de ventas donde los ingresos totales son iguales a los costos totales. La utilidad es cero: no se gana ni se pierde. Es el umbral mínimo de supervivencia.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🏢 Costo Fijo</h4>
+        <p>Costo que NO cambia con el nivel de producción. Se paga igual produzcas 1 o 1000 unidades. Ejemplos: arriendo, seguros, salarios administrativos.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>📦 Costo Variable</h4>
+        <p>Costo que cambia proporcionalmente con la producción. Si produces más, pagas más. Ejemplos: materia prima, empaques, comisiones de venta.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>💡 Margen de Contribución</h4>
+        <p>Precio de Venta - Costo Variable Unitario. Es lo que cada unidad vendida aporta para cubrir los costos fijos y generar utilidad.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🛡️ Margen de Seguridad</h4>
+        <p>Indica cuánto pueden caer las ventas antes de entrar en pérdidas. Se calcula: (Ventas Actuales - Punto de Equilibrio) ÷ Ventas Actuales.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>⚖️ Principio de Asociación</h4>
+        <p>Los costos y gastos deben registrarse en el mismo período en que se generan los ingresos que ayudaron a producir.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>📅 Principio de Causación</h4>
+        <p>Las transacciones se registran cuando ocurren, no cuando se pagan.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🛡️ Principio de Prudencia</h4>
+        <p>Ante la incertidumbre, se debe elegir la opción que no sobreestime activos ni ingresos, ni subestime pasivos ni gastos.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🔍 Principio de Revelación Plena</h4>
+        <p>Toda información que pueda influir en la decisión de un inversionista o acreedor debe ser divulgada. Hay que contar toda la verdad.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🎭 Contabilidad Creativa</h4>
+        <p>Eufemismo para referirse a técnicas que distorsionan la realidad financiera para presentar resultados más favorables. En su forma más agresiva, constituye fraude.</p>
+    </div>
+
+    <div class="glosario-item">
+        <h4>🔺 Triángulo del Fraude</h4>
+        <p>Modelo que explica que para que ocurra un fraude se necesitan tres elementos: Presión (motivación), Oportunidad (controles débiles) y Racionalización (justificación mental).</p>
+    </div>
+
+    <div class="success-box">
+        <h3>🎓 ¡Has completado el taller!</h3>
+        <p>Felicidades por llegar hasta aquí. Ahora tienes las herramientas básicas para entender las finanzas de cualquier negocio. Recuerda:</p>
+        <ul style="margin-left: 30px; margin-top: 10px;">
+            <li>📚 La contabilidad es el lenguaje de los negocios</li>
+            <li>💰 Saber diferenciar costos y gastos es clave para la rentabilidad</li>
+            <li>📊 El Punto de Equilibrio te dice el mínimo para sobrevivir</li>
+            <li>⚖️ La ética es tu activo más valioso como profesional</li>
+        </ul>
+        <p style="margin-top: 15px; font-style: italic;">"La integridad financiera no es una opción, es un deber. La transparencia contable es el fundamento de la confianza pública y el desarrollo sostenible."</p>
+    </div>
+</div>
+
+<footer>
+    <p>🏦 Taller de Arquitectura Financiera - Para Jóvenes Emprendedores</p>
+    <p style="margin-top: 10px; font-size: 0.9em;">Del Registro Contable a la Toma de Decisiones</p>
+    <p style="margin-top: 10px; font-size: 0.85em;">© 2026 - Material educativo adaptado para estudiantes de 12 a 14 años</p>
+</footer>
+</div>
+
+<script>
+// Navegación entre módulos
+function showModule(moduleId) {
+    document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(moduleId).classList.add('active');
+    document.getElementById('btn-' + moduleId).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+// Módulo 1: Clasificación de cuentas
+function checkClassification() {
+    const respuestas = {
+        q1: 'activo',
+        q2: 'pasivo',
+        q3: 'ingreso',
+        q4: 'gasto'
+    };
+    let correctas = 0;
+    let total = 4;
+    
+    for (let i = 1; i <= total; i++) {
+        const sel = document.getElementById('q' + i).value;
+        if (sel === respuestas['q' + i]) correctas++;
+    }
+    
+    const feedback = document.getElementById('classification-feedback');
+    if (correctas === total) {
+        feedback.className = 'feedback correct';
+        feedback.innerHTML = '🎉 ¡Perfecto! Respondiste todas correctamente. Eres un experto clasificando cuentas.';
+    } else {
+        feedback.className = 'feedback incorrect';
+        feedback.innerHTML = `📝 Respondiste ${correctas} de ${total} correctamente. ¡Sigue practicando! Recuerda: Activo = lo que tienes, Pasivo = lo que debes, Ingreso = lo que entra, Gasto = lo que sale.`;
+    }
+}
+
+// Módulo 1: Registro de transacción
+function checkTransaction() {
+    const cashIn = parseFloat(document.getElementById('cash-in').value);
+    const accountInc = document.getElementById('account-increase').value;
+    const incomeAcc = document.getElementById('income-account').value;
+    
+    const feedback = document.getElementById('transaction-feedback');
+    
+    if (cashIn === 250 && accountInc === 'caja' && incomeAcc === 'ventas') {
+        feedback.className = 'feedback correct';
+        feedback.innerHTML = '🎉 ¡Excelente! 5 juegos × $50 = $250. La caja aumenta (débito) y se registra el ingreso por ventas (crédito). ¡Partida doble perfecta!';
+    } else {
+        feedback.className = 'feedback incorrect';
+        feedback.innerHTML = '📝 Revisa tu respuesta. Pista: 5 juegos × $50 = $250. El dinero entra a CAJA (aumenta tu activo), y el ingreso se registra como VENTAS.';
+    }
+}
+
+// Módulo 2: Calculadora de utilidades
+function calcularUtilidades() {
+    const ventas = parseFloat(document.getElementById('ventas').value);
+    const costos = parseFloat(document.getElementById('costos').value);
+    const gastos = parseFloat(document.getElementById('gastos').value);
+    
+    const ub = ventas - costos;
+    const uo = ub - gastos;
+    const impuestos = Math.max(0, uo * 0.25);
+    const un = uo - impuestos;
+    const margen = ventas > 0 ? (un / ventas * 100) : 0;
+    
+    document.getElementById('ventas-value').textContent = ventas.toLocaleString();
+    document.getElementById('costos-value').textContent = costos.toLocaleString();
+    document.getElementById('gastos-value').textContent = gastos.toLocaleString();
+    document.getElementById('impuestos-value').textContent = impuestos.toFixed(0);
+    document.getElementById('ub').textContent = ub.toLocaleString();
+    document.getElementById('uo').textContent = uo.toLocaleString();
+    document.getElementById('un').textContent = un.toFixed(0);
+    document.getElementById('margen').textContent = margen.toFixed(1) + '%';
+    document.getElementById('margen-val').textContent = margen.toFixed(0);
+}
+
+// Módulo 2: Costos vs Gastos
+function checkCostos() {
+    const respuestas = {
+        c1: 'costo',
+        c2: 'gasto',
+        c3: 'costo',
+        c4: 'gasto'
+    };
+    let correctas = 0;
+    let total = 4;
+    
+    for (let i = 1; i <= total; i++) {
+        const sel = document.getElementById('c' + i).value;
+        if (sel === respuestas['c' + i]) correctas++;
+    }
+    
+    const feedback = document.getElementById('costos-feedback');
+    if (correctas === total) {
+        feedback.className = 'feedback correct';
+        feedback.innerHTML = '🎉 ¡Perfecto! Entendiste la diferencia entre costos y gastos. Recuerda: Costo = para producir, Gasto = para operar.';
+    } else {
+        feedback.className = 'feedback incorrect';
+        feedback.innerHTML = `📝 Respondiste ${correctas} de ${total} correctamente. Pista: El cuero y el salario de la costurera son COSTOS (se incorporan al zapato). El vendedor y la publicidad son GASTOS (no tocan el producto).`;
+    }
+}
+
+// Módulo 3: Calculadora de Punto de Equilibrio
+function calcularPE() {
+    const pv = parseFloat(document.getElementById('pv').value);
+    const cv = parseFloat(document.getElementById('cv').value);
+    const cf = parseFloat(document.getElementById('cf').value);
+    
+    const mc = pv - cv;
+    const pe = mc > 0 ? Math.ceil(cf / mc) : 0;
+    const peDinero = pe * pv;
+    
+    document.getElementById('pv-value').textContent = pv;
+    document.getElementById('cv-value').textContent = cv;
+    document.getElementById('cf-value').textContent = cf.toLocaleString();
+    document.getElementById('mc').textContent = mc.toFixed(2);
+    document.getElementById('pe').textContent = pe.toLocaleString();
+    document.getElementById('pe-dinero').textContent = peDinero.toLocaleString();
+    document.getElementById('pe-text').textContent = pe.toLocaleString();
+    
+    dibujarGraficoPE(pv, cv, cf, pe);
+}
+
+function dibujarGraficoPE(pv, cv, cf, pe) {
+    const svg = document.getElementById('pe-chart');
+    const width = 600, height = 300;
+    const margin = { top: 20, right: 20, bottom: 40, left: 60 };
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+    
+    const maxCantidad = pe * 2.5;
+    const maxDinero = Math.max(cf * 2, pe * pv * 1.2);
+    
+    const scaleX = (x) => margin.left + (x / maxCantidad) * chartWidth;
+    const scaleY = (y) => margin.top + chartHeight - (y / maxDinero) * chartHeight;
+    
+    let svgContent = '';
+    
+    // Fondo
+    svgContent += `<rect x="0" y="0" width="${width}" height="${height}" fill="#fafafa"/>`;
+    
+    // Ejes
+    svgContent += `<line x1="${margin.left}" y1="${margin.top + chartHeight}" x2="${margin.left + chartWidth}" y2="${margin.top + chartHeight}" stroke="#333" stroke-width="2"/>`;
+    svgContent += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${margin.top + chartHeight}" stroke="#333" stroke-width="2"/>`;
+    
+    // Etiquetas ejes
+    svgContent += `<text x="${width/2}" y="${height - 5}" text-anchor="middle" font-size="12" fill="#333">Cantidad vendida</text>`;
+    svgContent += `<text x="15" y="${height/2}" text-anchor="middle" font-size="12" fill="#333" transform="rotate(-90, 15, ${height/2})">Dinero ($)</text>`;
+    
+    // Línea de costos fijos
+    svgContent += `<line x1="${margin.left}" y1="${scaleY(cf)}" x2="${margin.left + chartWidth}" y2="${scaleY(cf)}" stroke="#e91e63" stroke-width="2" stroke-dasharray="5,5"/>`;
+    svgContent += `<text x="${margin.left + chartWidth - 5}" y="${scaleY(cf) - 5}" text-anchor="end" font-size="11" fill="#e91e63">Costos Fijos</text>`;
+    
+    // Línea de costos totales
+    const ctFinal = cf + cv * maxCantidad;
+    svgContent += `<line x1="${margin.left}" y1="${scaleY(cf)}" x2="${scaleX(maxCantidad)}" y2="${scaleY(ctFinal)}" stroke="#ff9800" stroke-width="2"/>`;
+    svgContent += `<text x="${scaleX(maxCantidad) - 5}" y="${scaleY(ctFinal) - 5}" text-anchor="end" font-size="11" fill="#ff9800">Costos Totales</text>`;
+    
+    // Línea de ingresos
+    const ingFinal = pv * maxCantidad;
+    svgContent += `<line x1="${margin.left}" y1="${scaleY(0)}" x2="${scaleX(maxCantidad)}" y2="${scaleY(ingFinal)}" stroke="#4caf50" stroke-width="2"/>`;
+    svgContent += `<text x="${scaleX(maxCantidad) - 5}" y="${scaleY(ingFinal) - 5}" text-anchor="end" font-size="11" fill="#4caf50">Ingresos</text>`;
+    
+    // Punto de equilibrio
+    if (pe > 0) {
+        svgContent += `<circle cx="${scaleX(pe)}" cy="${scaleY(pe * pv)}" r="6" fill="#667eea" stroke="#333" stroke-width="2"/>`;
+        svgContent += `<line x1="${scaleX(pe)}" y1="${scaleY(pe * pv)}" x2="${scaleX(pe)}" y2="${scaleY(0)}" stroke="#667eea" stroke-width="1.5" stroke-dasharray="3,3"/>`;
+        svgContent += `<text x="${scaleX(pe)}" y="${scaleY(0) + 15}" text-anchor="middle" font-size="11" font-weight="bold" fill="#667eea">PE: ${pe}</text>`;
+    }
+    
+    // Zonas
+    if (pe > 0 && pe < maxCantidad) {
+        svgContent += `<text x="${scaleX(pe/2)}" y="${scaleY(cf * 0.7)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#dc3545">PÉRDIDAS ❌</text>`;
+        svgContent += `<text x="${scaleX((pe + maxCantidad)/2)}" y="${scaleY(pe * pv * 0.5)}" text-anchor="middle" font-size="12" font-weight="bold" fill="#28a745">GANANCIAS ✅</text>`;
+    }
+    
+    svg.innerHTML = svgContent;
+}
+
+// Módulo 3: Escenarios
+function checkEscenarios() {
+    const esc1 = document.getElementById('esc1').value;
+    const esc2 = document.getElementById('esc2').value;
+    const esc3 = document.getElementById('esc3').value;
+    
+    const feedback = document.getElementById('escenarios-feedback');
+    
+    if (esc1 === 'pierdes' && esc2 === 'ganas' && esc3 === '33') {
+        feedback.className = 'feedback correct';
+        feedback.innerHTML = '🎉 ¡Perfecto! 180 < 200 (PE), por eso pierdes. 400 > 200 (PE), por eso ganas. El margen de seguridad es (300-200)/300 = 33%, lo que significa que tus ventas pueden caer un 33% antes de perder.';
+    } else {
+        feedback.className = 'feedback incorrect';
+        feedback.innerHTML = '📝 Revisa tus respuestas. Pista: Si vendes MENOS del PE (200), pierdes. Si vendes MÁS, ganas. El margen de seguridad es (300-200)/300 = 33%.';
+    }
+}
+
+// Módulo 4: Dilemas éticos
+function analizarDilema(num) {
+    const respuestas = {
+        1: {
+            correcto: 'causacion',
+            explicacion: '⚠️ Esto viola el Principio de Causación y el de Asociación. Los ingresos deben reconocerse a medida que se completa el trabajo (porcentaje de avance), no cuando se firma el contrato. Registrar todo al inicio infla artificialmente los ingresos y engaña a los inversionistas.'
+        },
+        2: {
+            correcto: 'prudencia',
+            explicacion: '⚠️ Esto viola el Principio de Prudencia y el de Revelación Plena. Si hay una probabilidad alta (60% es probable) de perder el juicio, la provisión DEBE registrarse. Ocultarla es fraude por omisión y engaña a los inversionistas.'
+        },
+        3: {
+            correcto: 'asociacion',
+            explicacion: '⚠️ Esto es capitalización fraudulenta de gastos. Las reparaciones que solo devuelven el activo a su estado original son GASTOS, no mejoras al activo. Registrarlos como activo infla artificialmente la utilidad del trimestre y viola el Principio de Asociación.'
+        }
+    };
+    
+    const textarea = document.getElementById('dilema' + num);
+    const feedback = document.getElementById('dilema' + num + '-feedback');
+    const respuesta = textarea.value.trim();
+    
+    if (respuesta.length < 20) {
+        feedback.className = 'feedback incorrect';
+        feedback.innerHTML = '📝 Por favor, escribe una respuesta más completa (mínimo 20 caracteres) explicando qué harías y por qué.';
+        return;
+    }
+    
+    feedback.className = 'feedback correct';
+    feedback.innerHTML = respuestas[num].explicacion;
+}
+
+// Módulo 4: Principios violados
+function checkPrincipios() {
+    const respuestas = {
+        p1: 'revelacion',
+        p2: 'causacion',
+        p3: 'asociacion'
+    };
+    let correctas = 0;
+    let total = 3;
+    
+    for (let i = 1; i <= total; i++) {
+        const sel = document.getElementById('p' + i).value;
+        if (sel === respuestas['p' + i]) correctas++;
+    }
+    
+    const feedback = document.getElementById('principios-feedback');
+    if (correctas === total) {
+        feedback.className = 'feedback correct';
+        feedback.innerHTML = '🎉 ¡Excelente! Identificaste correctamente los principios violados. Eres un verdadero detective contable.';
+    } else {
+        feedback.className = 'feedback incorrect';
+        feedback.innerHTML = `📝 Respondiste ${correctas} de ${total} correctamente. Pista: No registrar una multa = Revelación Plena. Cambiar gastos de mes = Causación. Costos en mes diferente a ventas = Asociación.`;
+    }
+}
+
+// Inicializar calculadoras al cargar
+window.addEventListener('load', function() {
+    calcularUtilidades();
+    calcularPE();
+});
+</script>
+</body>
+</html>
